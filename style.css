@@ -1,0 +1,33 @@
+* {
+    font-family: "Lucida Console", sans-serif;
+    font-size: 14px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#output {
+    color: white;
+}
+
+#input {
+    color: white;
+    word-break: break-all;
+    margin-left: 15px;
+}
+
+#path {
+    color: white;
+}
+
+#input:focus {
+    outline: none;
+}

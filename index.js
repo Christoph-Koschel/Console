@@ -5,11 +5,15 @@ const { init } = require("./controller.js");
 app.on("ready", () => {
 
     let WIN = new BrowserWindow({
+        width: 950,
+        height: 400,
         webPreferences: {
             nodeIntegration: true
         }
     });
 
+    WIN.setMenu(null);
+    WIN.webContents.openDevTools();
     WIN.loadFile("index.html").then(() => {
         init(WIN);
     });

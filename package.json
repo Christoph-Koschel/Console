@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "build": "electron-builder build --win --publish never",
+    "deploy": "electron-builder build --win --publish always",
     "git-commit": "git commit -m \"Console\"",
     "git-remote": "git remote add origin https://github.com/Christoph-Koschel/Console.git",
     "git-push": "git push -u origin master"
