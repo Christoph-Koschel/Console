@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const modules = [];
+let modules = [];
 const settings = {
     module: {
         path: __dirname + "/module"
@@ -9,6 +9,8 @@ const settings = {
 
 exports.loadModules = () => {
     let entries = fs.readdirSync(settings.module.path);
+
+    modules = [];
 
     for (let i = 0; i < entries.length; i++) {
         let entry = entries[i];
@@ -26,4 +28,8 @@ exports.loadModules = () => {
     console.log(modules);
 }
 
+
+exports.run = function () {
+
+}
 

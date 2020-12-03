@@ -18,6 +18,10 @@ app.on("ready", () => {
         init();
     });
 
+    WIN.on("closed",() => {
+       app.quit();
+    });
+
     /*
     * ===================================
     * == App Updater
