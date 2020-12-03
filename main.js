@@ -1,6 +1,6 @@
 const {autoUpdater} = require("electron-updater");
 const {app, BrowserWindow, ipcMain} = require("electron");
-const {init} = require("./controller.js");
+const {init} = require("./controller");
 
 app.on("ready", () => {
 
