@@ -1,5 +1,9 @@
-let WIN;
+const {ipcMain} = require("electron");
 
-exports.init = (WIN) => {
-    WIN = arguments[0];
+exports.init = function () {
+
 }
+
+ipcMain.on("runCMD", () => {
+
+});

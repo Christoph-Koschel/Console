@@ -1,6 +1,6 @@
 const {autoUpdater} = require("electron-updater");
 const {app, BrowserWindow, ipcMain} = require("electron");
-const { init } = require("./controller.js");
+const {init} = require("./controller.js");
 
 app.on("ready", () => {
 
@@ -15,7 +15,7 @@ app.on("ready", () => {
     WIN.setMenu(null);
     WIN.webContents.openDevTools();
     WIN.loadFile("index.html").then(() => {
-        init(WIN);
+        init();
     });
 
     /*
