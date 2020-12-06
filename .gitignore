@@ -1,5 +1,5 @@
 electron-builder.yml
 node_modules
+module
 dist
 .idea
-/module/
