@@ -1,14 +1,15 @@
 const {autoUpdater} = require("electron-updater");
 const {app, BrowserWindow, ipcMain} = require("electron");
 const {init} = require("./controller");
+const cMain = require("@christoph-koschel/console-module").main;
 
 app.on("ready", () => {
-
     let WIN = new BrowserWindow({
         width: 950,
         height: 400,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            spellcheck: false
         }
     });
 
@@ -18,8 +19,16 @@ app.on("ready", () => {
         init();
     });
 
-    WIN.on("closed",() => {
-       app.quit();
+    WIN.on("closed", () => {
+        app.quit();
+    });
+
+    cMain.on("log", (args) => {
+        WIN.webContents.send("log", args);
+    });
+
+    cMain.on("error", (args) => {
+        WIN.webContents.send("error", args);
     });
 
     /*
@@ -47,7 +56,6 @@ app.on("ready", () => {
     ipcMain.on('restart_app', () => {
         autoUpdater.quitAndInstall();
     });
-
 
     //endregion
 

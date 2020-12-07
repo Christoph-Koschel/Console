@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Console</title>
     <link rel="stylesheet" href="./style.css">
-    <script src="./gui.js"></script>
+    <script type="module" src="./gui.js"></script>
 </head>
 <body>
 <div>
@@ -24,6 +24,5 @@
     ipcRenderer.on('update_downloaded', () => {
         ipcRenderer.removeAllListeners('update_downloaded');
     });
-
 </script>
 </html>

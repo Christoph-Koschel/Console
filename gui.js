@@ -1,3 +1,6 @@
+const {ipcRenderer} = require("electron");
+const fs = require("fs");
+const fontPath = __dirname + "\\font.json";
 let input = [""];
 let step = 0;
 
@@ -14,7 +17,32 @@ function filter(text) {
     return text;
 }
 
+function write(value,flag) {
+    let output = document.getElementById("output");
+
+    let doScroll = false;
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        doScroll = true;
+    }
+
+    output.innerHTML += `<div class=\"type-${flag}\"><a>${value}</a></div>`;
+
+    if (doScroll === true) {
+        window.scrollTo({
+            top: window.innerHeight + window.scrollY,
+            behavior: "auto"
+        });
+    }
+}
+
 window.addEventListener("load",() => {
+    if (fs.existsSync(fontPath) && fs.statSync(fontPath).isFile()) {
+        let font = fs.readFileSync(fontPath,"utf8");
+        let style = `<style>.type-error { color: ${font.error};</style>`;
+        document.head.innerHTML += style;
+    }
+
+
     document.getElementById("input").addEventListener("keyup", (e) => {
         if (e.keyCode === 13) { // 13 === (ENTER)
             let text = filter(document.getElementById("input").innerHTML);
@@ -25,10 +53,12 @@ window.addEventListener("load",() => {
                 newInput.push(input[i]);
             }
             input = newInput;
-            let backInfo = ipcRenderer.sendSync("runCMD", text);
-            write(backInfo.path + "&nbsp;" + text, "default");
+
+            write(ipcRenderer.sendSync("getPath") + "> " + text);
+
+            ipcRenderer.send("runCMD", text);
             document.getElementById("input").innerHTML = "";
-            document.getElementById("path").innerHTML = backInfo.path;
+            document.getElementById("path").innerHTML = ipcRenderer.sendSync("getPath") + ">";
         } else if (e.keyCode === 38) { // 83 (ARROW-UP)
             if (step !== input.length - 1) {
                 step++;
@@ -40,11 +70,21 @@ window.addEventListener("load",() => {
                 document.getElementById("input").innerHTML = input[step];
             }
         }
-
-
     });
 
     window.addEventListener("dblclick",() => {
         document.getElementById("input").focus();
+    });
+
+    setTimeout(() => {
+        document.getElementById("path").innerHTML = ipcRenderer.sendSync("getPath") + ">";
+    },20);
+
+    ipcRenderer.on("error",(event, args) => {
+        write(args,"error");
+    });
+
+    ipcRenderer.on("log",(event, args) => {
+        write(args,"log");
     });
 });
