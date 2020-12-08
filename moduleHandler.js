@@ -18,7 +18,7 @@ exports.loadModules = () => {
     let entries = fs.readdirSync(settings.module.path);
 
     modules = [];
-
+    let loaded = 0
     for (let i = 0; i < entries.length; i++) {
         let entry = entries[i];
         if (fs.statSync(settings.module.path + "/" + entry).isDirectory()) {
@@ -30,9 +30,11 @@ exports.loadModules = () => {
                     src: require(settings.module.path + "/" + entry + "/" + module.main),
                     functions: module.functions
                 });
+                loaded++;
             }
         }
     }
+    require("@christoph-koschel/console-module").module.writeInfo("Successfully loaded " + loaded.toString() + " of " + entries.length.toString() + " modules");
     console.log(modules);
 }
 

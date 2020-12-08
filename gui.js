@@ -5,19 +5,19 @@ let input = [""];
 let step = 0;
 
 function filter(text) {
-    let HTML = ["<br>","</br>","<br />","<p>","</p>","<a>","</a>","<div>","</div>"];
+    let HTML = ["<br>", "</br>", "<br />", "<p>", "</p>", "<a>", "</a>", "<div>", "</div>"];
 
     for (let i = 0; i < HTML.length; i++) {
         let doWhile = true;
         while (doWhile) {
-            text = text.replace(HTML[i],"");
+            text = text.replace(HTML[i], "");
             doWhile = (text.search(HTML[i]) !== -1);
         }
     }
     return text;
 }
 
-function write(value,flag) {
+function write(value, flag) {
     let output = document.getElementById("output");
 
     let doScroll = false;
@@ -35,10 +35,24 @@ function write(value,flag) {
     }
 }
 
-window.addEventListener("load",() => {
+function writeList(value, flag) {
+    let list = "<ul>";
+
+    for (let i = 0; i < value.length; i++) {
+        list += `<li>${value[i]}</li>`;
+    }
+
+    list += "</ul>";
+
+    write(list, flag);
+}
+
+window.addEventListener("load", () => {
     if (fs.existsSync(fontPath) && fs.statSync(fontPath).isFile()) {
-        let font = fs.readFileSync(fontPath,"utf8");
-        let style = `<style>.type-error { color: ${font.error};</style>`;
+        let font = fs.readFileSync(fontPath, "utf8");
+        font = JSON.parse(font);
+        console.log(font)
+        let style = `<style>.type-error { color: ${font.error};} .type-info {color: ${font.info};}</style>`;
         document.head.innerHTML += style;
     }
 
@@ -72,19 +86,35 @@ window.addEventListener("load",() => {
         }
     });
 
-    window.addEventListener("dblclick",() => {
+    window.addEventListener("dblclick", () => {
         document.getElementById("input").focus();
     });
 
     setTimeout(() => {
         document.getElementById("path").innerHTML = ipcRenderer.sendSync("getPath") + ">";
-    },20);
+    }, 20);
 
-    ipcRenderer.on("error",(event, args) => {
-        write(args,"error");
+    ipcRenderer.on("error", (event, args) => {
+        write(args, "error");
     });
 
-    ipcRenderer.on("log",(event, args) => {
-        write(args,"log");
+    ipcRenderer.on("log", (event, args) => {
+        write(args, "log");
+    });
+
+    ipcRenderer.on("info", (event, args) => {
+        write(args, "info");
+    });
+
+    ipcRenderer.on("list-info", (event, args) => {
+        writeList(args, "info");
+    });
+
+    ipcRenderer.on("list-log", (event, args) => {
+        writeList(args, "log");
+    });
+
+    ipcRenderer.on("list-error", (event, args) => {
+        writeList(args, "error");
     });
 });

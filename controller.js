@@ -15,6 +15,5 @@ ipcMain.on("runCMD", (event, args) => {
 });
 
 ipcMain.on("getPath", (event) => {
-    console.log(require("@christoph-koschel/console-module").main.path);
     event.returnValue = require("@christoph-koschel/console-module").main.path;
 });
