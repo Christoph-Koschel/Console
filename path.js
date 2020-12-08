@@ -1,5 +1,4 @@
 const fs = require("fs");
-const path = require("path");
 exports.functions = [
     "cd",
     "scan"
@@ -53,6 +52,6 @@ exports.scan = function () {
 
         list.WriteList("info");
     } else {
-        module.writeError("No function \"scan\" has the number of supported parameters")
+        module.writeError("No function \"scan\" has the number of supported parameters");
     }
 }

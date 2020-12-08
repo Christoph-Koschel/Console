@@ -60,6 +60,8 @@ window.addEventListener("load", () => {
     document.getElementById("input").addEventListener("keyup", (e) => {
         if (e.keyCode === 13) { // 13 === (ENTER)
             let text = filter(document.getElementById("input").innerHTML);
+            document.getElementById("input").innerHTML = "";
+
             let newInput = [""];
             step = 0;
             newInput.push(text);
@@ -69,9 +71,7 @@ window.addEventListener("load", () => {
             input = newInput;
 
             write(ipcRenderer.sendSync("getPath") + "> " + text);
-
             ipcRenderer.send("runCMD", text);
-            document.getElementById("input").innerHTML = "";
             document.getElementById("path").innerHTML = ipcRenderer.sendSync("getPath") + ">";
         } else if (e.keyCode === 38) { // 83 (ARROW-UP)
             if (step !== input.length - 1) {
