@@ -13,6 +13,10 @@ const settings = {
         {
             src: require("./install.js"),
             functions: require("./install.js").functions
+        },
+        {
+            src: require("./settings.js"),
+            functions: require("./settings.js").functions
         }
     ]
 };

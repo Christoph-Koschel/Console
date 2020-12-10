@@ -32,18 +32,18 @@ app.on("ready", () => {
     });
 
     cMain.on("info", (args) => {
-       WIN.webContents.send("info", args);
+        WIN.webContents.send("info", args);
     });
 
-    cMain.on("list-error",(args) => {
+    cMain.on("list-error", (args) => {
         WIN.webContents.send("list-error", args);
     });
 
-    cMain.on("list-log",(args) => {
+    cMain.on("list-log", (args) => {
         WIN.webContents.send("list-log", args);
     });
 
-    cMain.on("list-info",(args) => {
+    cMain.on("list-info", (args) => {
         WIN.webContents.send("list-info", args);
     });
 
