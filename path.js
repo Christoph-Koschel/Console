@@ -6,14 +6,14 @@ exports.functions = [
 
 exports.cd = function () {
     let module = require("@christoph-koschel/console-module").module;
-    let args = module.args;
-    let currentPath = module.path;
+    let args = module.variables.args;
+    let currentPath = module.variables.path;
 
 
     let to = args[0];
     if (to === "..") {
         if (currentPath.search("\\\\") === -1) {
-            module.writeError("\"" + currentPath + "\" is the root directory and there's no parent directory");
+            module.Write("text", "error", "\"" + currentPath + "\" is the root directory and there's no parent directory");
             return;
         } else {
             currentPath = currentPath.substring(0, currentPath.lastIndexOf('\\'));
@@ -27,21 +27,20 @@ exports.cd = function () {
         to = (to[to.length - 1] === "\\") ? to.replace(/\\$/, "") : to;
         currentPath = to;
     } else {
-        module.writeError("The Directory \"" + to + "\" is not exist");
+        module.Write("text", "error", "The Directory \"" + to + "\" is not exist");
         return;
     }
 
-    require("@christoph-koschel/console-module").main.path = currentPath;
+    require("@christoph-koschel/console-module").main.variables.path = currentPath;
 }
 
 exports.scan = function () {
     let module = require("@christoph-koschel/console-module").module;
-    let args = module.args;
-    let currentPath = module.path;
+    let args = module.variables.args;
+    let currentPath = module.variables.path;
 
     if (args[0] === "") {
-
-        let list = module.list.create();
+        let list = new module.List();
         let entries = fs.readdirSync(currentPath);
 
         for (let i = 0; i < entries.length; i++) {
@@ -50,8 +49,8 @@ exports.scan = function () {
             }
         }
 
-        list.WriteList("info");
+        module.Write("list", "info", list);
     } else {
-        module.writeError("No function \"scan\" has the number of supported parameters");
+        module.Write("text", "error", "No function \"scan\" has the number of supported parameters");
     }
 }

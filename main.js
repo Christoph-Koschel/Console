@@ -1,5 +1,5 @@
 const {autoUpdater} = require("electron-updater");
-const {app, BrowserWindow, ipcMain} = require("electron");
+const {app, BrowserWindow, ipcMain, Menu} = require("electron");
 const {init} = require("./controller");
 const cMain = require("@christoph-koschel/console-module").main;
 
@@ -23,28 +23,16 @@ app.on("ready", () => {
         app.quit();
     });
 
-    cMain.on("log", (args) => {
+    cMain.On("log", (args) => {
         WIN.webContents.send("log", args);
     });
 
-    cMain.on("error", (args) => {
+    cMain.On("error", (args) => {
         WIN.webContents.send("error", args);
     });
 
-    cMain.on("info", (args) => {
+    cMain.On("info", (args) => {
         WIN.webContents.send("info", args);
-    });
-
-    cMain.on("list-error", (args) => {
-        WIN.webContents.send("list-error", args);
-    });
-
-    cMain.on("list-log", (args) => {
-        WIN.webContents.send("list-log", args);
-    });
-
-    cMain.on("list-info", (args) => {
-        WIN.webContents.send("list-info", args);
     });
 
     /*

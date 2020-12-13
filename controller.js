@@ -4,7 +4,7 @@ const {loadModules, run} = require("./moduleHandler.js");
 exports.init = function () {
     loadModules();
     let cMain = require("@christoph-koschel/console-module").main;
-    cMain.path = process.cwd();
+    cMain.variables.path = process.cwd();
 }
 
 ipcMain.on("runCMD", (event, args) => {
@@ -15,5 +15,5 @@ ipcMain.on("runCMD", (event, args) => {
 });
 
 ipcMain.on("getPath", (event) => {
-    event.returnValue = require("@christoph-koschel/console-module").main.path;
+    event.returnValue = require("@christoph-koschel/console-module").main.variables.path;
 });
