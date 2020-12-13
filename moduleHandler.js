@@ -28,6 +28,8 @@ exports.getData = () => {
     };
 }
 
+console.log(settings.baseModule);
+
 cMain.variables.module = settings.module.path;
 exports.loadModules = () => {
     const cModule = require("@christoph-koschel/console-module").module;

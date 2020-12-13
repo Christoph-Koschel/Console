@@ -13,14 +13,21 @@ app.on("ready", () => {
         }
     });
 
-    WIN.setMenu(null);
-    WIN.webContents.openDevTools();
-    WIN.loadFile("index.html").then(() => {
-        init();
+    WIN.webContents.on("update-target-url",(event) => {
+        let url = WIN.webContents.getURL();
+        if (url !== "file:///" + (__dirname.replace(/\\/gi,"/")) + "/index.html") {
+            WIN.loadFile("index.html");
+        }
     });
 
     WIN.on("closed", () => {
         app.quit();
+    });
+
+    WIN.setMenu(null);
+    WIN.webContents.openDevTools();
+    WIN.loadFile("index.html").then(() => {
+        init();
     });
 
     cMain.On("log", (args) => {

@@ -16,7 +16,7 @@ function getModuleData() {
     let data = require("./moduleHandler.js").getData();
     const {Table} = require("@christoph-koschel/console-module").module;
 
-    let temp = []
+    let temp = [];
     temp.push([
         {
             label: "Modules",
@@ -48,6 +48,46 @@ function getModuleData() {
             }
         ]);
     }
+
+    temp.push([
+            {
+                label: "<hr>",
+                colspan: 2
+            }
+        ]
+    )
+    temp.push([
+        {
+            label: "Base Modules",
+            colspan: 2
+        }
+    ]);
+
+    temp.push([
+        {
+            label: "Functions",
+            colspan: 2
+        }
+    ]);
+
+    let functions = "-&nbsp;" + data.baseModule[0].functions[0];
+
+    for (let i = 1; i < data.baseModule[0].functions.length; i++) {
+        functions += "<br>-&nbsp;" + data.baseModule[0].functions[i];
+    }
+
+    for (let i = 1; i < data.baseModule.length; i++) {
+        for (let k = 0; k < data.baseModule[i].functions.length; k++) {
+            functions += "<br>-&nbsp;" + data.baseModule[i].functions[k];
+        }
+    }
+
+    temp.push([
+        {
+            label: functions,
+            colspan: 2
+        }
+    ]);
 
     return Table.BuildFromTemplate(temp);
 }
