@@ -17,6 +17,10 @@ const settings = {
         {
             src: require("./settings.js"),
             functions: require("./settings.js").functions
+        },
+        {
+            src: require("./view.js"),
+            functions: require("./view.js").functions
         }
     ]
 };

@@ -106,15 +106,8 @@ window.addEventListener("load", () => {
         write(args, "info");
     });
 
-    ipcRenderer.on("list-info", (event, args) => {
-        writeList(args, "info");
-    });
-
-    ipcRenderer.on("list-log", (event, args) => {
-        writeList(args, "log");
-    });
-
-    ipcRenderer.on("list-error", (event, args) => {
-        writeList(args, "error");
+    ipcRenderer.on("clear", () => {
+        document.getElementById("output").innerHTML = "";
+        write("Console cleared", "info");
     });
 });

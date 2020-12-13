@@ -42,6 +42,10 @@ app.on("ready", () => {
         WIN.webContents.send("info", args);
     });
 
+    cMain.view.On("clear",() => {
+        WIN.webContents.send("clear");
+    });
+
     /*
     * ===================================
     * == App Updater
