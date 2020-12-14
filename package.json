@@ -24,7 +24,7 @@
     "electron-builder": "^22.9.1"
   },
   "dependencies": {
-    "@christoph-koschel/console-module": "^1.5.1",
+    "@christoph-koschel/console-module": "^1.6.0",
     "electron-updater": "^4.3.5"
   }
 }

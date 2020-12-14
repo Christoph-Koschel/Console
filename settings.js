@@ -9,6 +9,9 @@ exports.data = function () {
     if (args[0] === "module") {
         let table = getModuleData();
         module.Write("table", "info", table);
+    } else if (args[0] === "user") {
+        let table = getUserData();
+        module.Write("table", "info", table);
     }
 }
 
@@ -86,6 +89,85 @@ function getModuleData() {
         {
             label: functions,
             colspan: 2
+        }
+    ]);
+
+    return Table.BuildFromTemplate(temp);
+}
+
+function getUserData() {
+    const {Table} = require("@christoph-koschel/console-module").module;
+    let temp = [];
+    let os = require("os");
+    let userInfo = os.userInfo();
+
+    temp.push([
+        {
+            label: "User",
+            colspan: 2
+        }
+    ]);
+
+    temp.push([
+        {
+            label: "Username:"
+        },
+        {
+            label: userInfo.username
+        }
+    ]);
+
+    temp.push([
+        {
+            label: "Homedir"
+        },
+        {
+            label: userInfo.homedir
+        }
+    ]);
+
+    temp.push([
+        {
+            label: "OS"
+        },
+        {
+            label: os.type()
+        }
+    ]);
+
+    temp.push([
+        {
+            label: "Platform"
+        },
+        {
+            label: os.platform()
+        }
+    ]);
+
+    temp.push([
+        {
+            label: "Architecture"
+        },
+        {
+            label: os.arch()
+        }
+    ]);
+
+    temp.push([
+        {
+            label: "Total memory"
+        },
+        {
+            label: os.totalmem() + ".bytes"
+        }
+    ]);
+
+    temp.push([
+        {
+            label: "Free memory"
+        },
+        {
+            label: os.freemem() + ".bytes"
         }
     ]);
 
