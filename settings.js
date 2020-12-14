@@ -12,6 +12,10 @@ exports.data = function () {
     } else if (args[0] === "user") {
         let table = getUserData();
         module.Write("table", "info", table);
+    } else if (args[0] === "") {
+        module.Write("table", "info", getModuleData());
+        module.Write("text", "log", "<hr>");
+        module.Write("table", "info", getUserData());
     }
 }
 
